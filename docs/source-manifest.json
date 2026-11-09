@@ -1,0 +1,60 @@
+{
+  "manifest_version": 1,
+  "dataset_origin": "synthetic_only",
+  "generator_status": "implemented",
+  "seed": 20261022,
+  "external_personal_data_used": false,
+  "sources": [
+    {
+      "id": "user-business-brief",
+      "kind": "user_supplied_requirements",
+      "url": null,
+      "version": "session_2026-11-08",
+      "inspected_at": "2026-11-08",
+      "license_or_terms": "provided for project requirements; no external dataset",
+      "transformations": "normalized into rule, schema, validation and implementation contracts",
+      "discarded_fields": [],
+      "contributes_entity_data": false
+    },
+    {
+      "id": "candidate-guide",
+      "kind": "local_requirements_document",
+      "local_path": "~/Downloads/YottaFlex AI Candidate Project Submission Guidelines.pdf",
+      "url": null,
+      "version": "one-page downloaded artifact",
+      "sha256": "e26107381e39c901af6a92a0a89a7178604851291eaaf2f3016e146da6532e73",
+      "inspected_at": "2026-11-08",
+      "license_or_terms": "not established; original document excluded from redistribution",
+      "transformations": "submission requirements summarized; text and page visually inspected",
+      "discarded_fields": [
+        "visual branding"
+      ],
+      "contributes_entity_data": false
+    }
+  ],
+  "technical_references": [
+    "https://fastapi.tiangolo.com/tutorial/first-steps/",
+    "https://fastapi.tiangolo.com/tutorial/testing/",
+    "https://www.postgresql.org/docs/16/sql-select.html",
+    "https://www.postgresql.org/docs/16/ddl-constraints.html"
+  ],
+  "planned_dataset_manifest_fields": [
+    "run_id",
+    "generator_version",
+    "code_sha256",
+    "config_sha256",
+    "policy_version",
+    "seed",
+    "profile",
+    "observation_interval",
+    "source_urls",
+    "versions",
+    "retrieval_dates",
+    "licenses",
+    "transformations",
+    "discarded_fields",
+    "table_counts",
+    "payload_checksums"
+  ],
+  "generator_version": "1.0.0"
+}

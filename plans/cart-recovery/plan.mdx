@@ -1,0 +1,197 @@
+---
+title: "Cart Recovery: architecture and implementation"
+brief: "Consent-aware recovery, reproducible synthetic data and one-order conversion attribution."
+kind: "plan"
+localOnly: true
+---
+
+Build a working synthetic recovery application that explains every contact decision and
+reconciles every credited order. A customer leaves a cart at 10:00; at 11:00 it may qualify
+for recovery. Consent withdrawal before dispatch prevents the message. A permitted message's
+click can earn the same cart's purchase once within seven days. Operators can inspect the
+source events, suppression reasons and winning attribution.
+
+The local application implements generation, validation, persistent recovery services, a simulated worker,
+attribution, metrics and the responsive operations console. The milestones below map the delivered code
+to verification evidence. Real provider integration and public production deployment are separate extensions. The latest
+downloaded candidate guideline adds runnable code, a public repository, real timestamps
+within a 72-hour window, prompt history and honest AI disclosure. The deadline start is unknown.
+
+## Architecture and runtime boundaries
+
+Choose one Python/FastAPI application, PostgreSQL 16 and a worker from the same codebase.
+The operations console uses server-rendered HTML. Keep email and SMS simulated so the demo
+is deterministic and cannot contact real customers. Customer/account identity spans devices;
+permissions and frequency caps are independent by channel and shared across all customer carts.
+
+<Diagram id="system-boundaries" frame="hide" caption="Runtime layers and the separate evaluation boundary.">
+
+```html
+<div class="layers">
+<section class="diagram-panel" data-rough><h3>Inputs and people</h3>
+<div class="diagram-node">Synthetic customer actions</div>
+<div class="diagram-node">Operator / Analyst / Manager console</div>
+<p class="diagram-muted">Source actions and read/review commands enter through authenticated APIs.</p></section>
+<section class="diagram-panel" data-rough><h3>One application</h3>
+<div class="diagram-card">FastAPI + server-rendered console</div>
+<div class="diagram-card">Cart / Consent / Campaign / Order services</div>
+<div class="diagram-card">Pure versioned policy + deterministic attribution</div>
+<p class="diagram-muted">Verified customer identity spans devices; customer locks serialize contact decisions.</p></section>
+<section class="diagram-panel" data-rough><h3>Durable execution</h3>
+<div class="diagram-node">PostgreSQL facts, history and audit decisions</div>
+<div class="diagram-node">Outbox worker + simulated email/SMS</div>
+<div class="diagram-node">Callbacks, payments, settlement and metrics</div>
+<p class="diagram-muted">Append history; retain stable dispatch keys, receipts and one order credit.</p></section>
+</div><div class="diagram-box"><strong>Offline evaluation boundary</strong>
+<p>Seeded generator → baseline facts and isolated challenge claims → detector findings.</p>
+<p>Separate ground truth → evaluator only. Canonical CSV / JSON / SQL exports carry checksums.</p></div>
+```
+
+```css
+.layers{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px}.diagram-panel{padding:16px}.diagram-node,.diagram-card{padding:12px;margin-block:10px}.diagram-box{margin-top:16px;padding:16px}
+```
+
+</Diagram>
+
+The implemented simulator worker locks the customer first, then the pending job, and rechecks live
+consent, purchase, inactivity, blocks, quiet hours and cap reservations. The simulated provider
+acceptance commits with the audit decision and job completion. An uncertain future real-provider
+acceptance needs idempotent reconciliation; a DB transaction cannot atomically control a third party.
+
+Consent and business events retain effective/occurrence and recorded time. Facts are immutable;
+job state is an operational projection with append-only transition history. Unique receipts stop
+duplicate dispatch credit; unique order attribution stops campaign double counting. Technical
+FKs do not replace service checks for lifecycle, time, totals or semantic eligibility.
+
+Runtime role checks protect source and manager writes. No production data, credentials or real
+provider calls enter this submission. Viewer access is read-only. Large data exports stay out
+of git; publish only to a destination the user explicitly chooses.
+
+## Entity and identity contracts
+
+The diagram shows entity identities and joins, not every field. The generated
+`docs/data-dictionary.csv` contains all columns, types, optionality, enums, units, uniqueness,
+checks and FK contracts. Immutable event relations add effective dating and lifecycle history.
+Campaign is one cart's recovery episode; MessageTemplate is an immutable personalized snapshot.
+Cart/Session and Campaign/MessageTemplate use bridges. A cart has at most one order and an order
+at most one credit. Text IDs follow CUS / CART-2026 / CMP-2026 / MSG-cart / SEND-2026 / ORD-2026.
+
+<DataModel id="entity-identities" entities={[{"id": "Customer", "name": "Customer", "fields": [{"name": "customer_id", "type": "text", "pk": true}]}, {"id": "Consent", "name": "Consent", "fields": [{"name": "consent_id", "type": "text", "pk": true}, {"name": "customer_id", "type": "text", "fk": "Customer.customer_id"}]}, {"id": "Session", "name": "Session", "fields": [{"name": "session_id", "type": "text", "pk": true}, {"name": "customer_id", "type": "text", "fk": "Customer.customer_id"}]}, {"id": "Cart", "name": "Cart", "fields": [{"name": "cart_id", "type": "text", "pk": true}, {"name": "customer_id", "type": "text", "fk": "Customer.customer_id"}]}, {"id": "CartSession", "name": "CartSession", "fields": [{"name": "cart_session_id", "type": "text", "pk": true}, {"name": "cart_id", "type": "text", "fk": "Cart.cart_id"}, {"name": "session_id", "type": "text", "fk": "Session.session_id"}]}, {"id": "CartLine", "name": "CartLine", "fields": [{"name": "cart_line_id", "type": "text", "pk": true}, {"name": "cart_id", "type": "text", "fk": "Cart.cart_id"}]}, {"id": "Campaign", "name": "Campaign", "fields": [{"name": "campaign_id", "type": "text", "pk": true}, {"name": "cart_id", "type": "text", "fk": "Cart.cart_id"}]}, {"id": "MessageTemplate", "name": "MessageTemplate", "fields": [{"name": "template_id", "type": "text", "pk": true}, {"name": "cart_id", "type": "text", "fk": "Cart.cart_id"}]}, {"id": "CampaignMessage", "name": "CampaignMessage", "fields": [{"name": "dispatch_id", "type": "text", "pk": true}, {"name": "campaign_id", "type": "text", "fk": "Campaign.campaign_id"}, {"name": "template_id", "type": "text", "fk": "MessageTemplate.template_id"}]}, {"id": "SendAttempt", "name": "SendAttempt", "fields": [{"name": "send_id", "type": "text", "pk": true}, {"name": "dispatch_id", "type": "text", "fk": "CampaignMessage.dispatch_id"}]}, {"id": "Order", "name": "Order", "fields": [{"name": "order_id", "type": "text", "pk": true}, {"name": "cart_id", "type": "text", "fk": "Cart.cart_id"}]}, {"id": "Attribution", "name": "Attribution", "fields": [{"name": "attribution_id", "type": "text", "pk": true}, {"name": "order_id", "type": "text", "fk": "Order.order_id"}, {"name": "send_id", "type": "text", "fk": "SendAttempt.send_id"}]}]} relations={[{"from": "Customer", "to": "Consent", "kind": "1-n"}, {"from": "Customer", "to": "Session", "kind": "1-n"}, {"from": "Customer", "to": "Cart", "kind": "1-n"}, {"from": "Cart", "to": "CartSession", "kind": "1-n"}, {"from": "Session", "to": "CartSession", "kind": "1-n"}, {"from": "Cart", "to": "CartLine", "kind": "1-n"}, {"from": "Cart", "to": "Campaign", "kind": "1-n"}, {"from": "Cart", "to": "MessageTemplate", "kind": "1-n"}, {"from": "Campaign", "to": "CampaignMessage", "kind": "1-n"}, {"from": "MessageTemplate", "to": "CampaignMessage", "kind": "1-n"}, {"from": "CampaignMessage", "to": "SendAttempt", "kind": "1-n"}, {"from": "Cart", "to": "Order", "kind": "1-1"}, {"from": "Order", "to": "Attribution", "kind": "1-1"}, {"from": "SendAttempt", "to": "Attribution", "kind": "1-n"}]} />
+
+## Business decisions
+
+- Abandonment begins at 60 minutes of genuine inactivity across devices, and expires at 14
+  days. Paid, empty or expired carts cannot qualify. Reopening begins a fresh episode;
+  repeated scans cannot duplicate episodes. Report ever-abandoned and current state separately.
+- Consent is known-effective at dispatch. Missing consent denies contact; equal-time withdrawal
+  wins. Keep channel-specific block history and evidence references. Recheck after scheduling.
+- Caps count accepted logical dispatches under the customer lock: email 1/24h, SMS 1/72h, all channels
+  3/7d, using `(T-window, T]`. Retries/callbacks must not multiply contact counts.
+- Both channels are quiet 21:00-09:00 in the customer's zone. Defer valid jobs to the next
+  permitted time and recheck everything; permanent disqualifiers suppress/cancel.
+- Stable SHA-256 customer assignment chooses A/B. No invented discounts. The baseline uses
+  one initial email or SMS touch (80/20 target), with both channels represented; extended
+  retry/two-touch scenarios report separate added row counts. Cancellations of unattempted
+  baseline jobs append a first suppressed attempt, preserving the exact audit/count contract.
+- Order time is successful payment time. Credit the latest valid click for the same customer
+  and exact cart in `[purchase-7d, purchase)`.
+  Break ties by event ID then send ID. Opens/deliveries earn no credit. Runtime settles after
+  a 24h simulated-ingestion delay. Arbitrary backdated external ingestion is a separate adapter extension.
+- Integer INR paise and source-derived line snapshots determine cart/order/revenue totals.
+  Refund events reduce net credit. Observational attribution is not a causal-lift claim.
+
+## Generation and truth isolation
+
+Use seed 20261022 and the same parameterized pipeline for starter/full. Full creates 50,000 carts,
+20,000 unique ever-abandoned carts, 10,000 per-cart campaign instances and 10,000 evaluated
+SendAttempt rows. Accepted sends are separately reported and may be fewer. Starter uses
+1,000 / 400 / 200 / 200. Generate parents, dependent facts and time-ordered recovery decisions,
+then outcomes from those events. Never independently randomize outcome labels or bypass rules
+to hit quotas. Reject infeasible configurations clearly.
+
+Generate a valid baseline first. Then add isolated challenge claims for sent-after-opt-out,
+abandoned-after-purchase, double attribution and stale cart totals. Challenge parents stay valid;
+bad claims do not enter accepted production facts. Expected decisions and issue labels live
+only in separate truth files. Detection cannot read truth; evaluation compares findings afterward.
+Use an independently written reference oracle rather than copying production outputs as labels.
+
+Export canonical CSV, JSON and dependency-ordered SQL plus README, schema, dictionary, policy,
+configuration, provenance, validation report and SHA-256 manifest. Generate twice into separate
+directories and compare every payload count/checksum. Report realized distributions and
+normal/boundary/failure coverage. Exclude volatile runtime receipts from deterministic hashes.
+
+## Implementation files worth reviewing
+
+<AnnotatedCode id="policy-boundary" filename={"src/cart_recovery/rules.py"} language={"python"} code={"def evaluate(*, now: datetime, last_activity: datetime, purchased_at: datetime | None,\n             quantity: int, total_minor: int, channel: Channel, timezone: str,\n             consent: list[Consent], contacts: list[Contact],\n             blocked: bool = False, policy: Policy = Policy()) -> Decision:\n    \"\"\"Inputs must be scoped to ONE verified customer and one cart by the service.\n\n    Contacts include accepted sends and active reservations across ALL their carts.\n    The caller must serialize dispatch with a customer row lock.\n    \"\"\"\n    # Service validates ownership and supplies a customer-locked history.\n"} annotations={[{"lines": "1-5", "label": "Explicit decision inputs", "note": "No wall clock, DB calls or hidden labels; all customer history is supplied by the service."}]} />
+
+`db/catalog.py` renders the SQL and dictionary together. `config/policy.json` freezes policy;
+`config/generation.json` freezes cohort targets. `api.py` exposes the authenticated operations APIs and serves the console.
+The ordered milestones identify each new service, integration test and UI surface.
+
+## Milestone 1 - Data/storage contracts
+
+Implemented immutable core tables, field dictionary, PK/FK/composite constraints, PostgreSQL initialization
+and numbered runtime migrations. Pure rules define abandonment, consent/caps, variant assignment and
+one-order attribution. SQL/schema and boundary tests exercise these contracts.
+
+## Milestone 2 - Generator and evaluation
+
+Implemented shared starter/full generation, exact baseline quotas, source-derived line/order totals,
+channel events, recovered/organic/late orders, four isolated anomaly claims and separate truth.
+CSV/JSON/SQL, manifests, validation/evaluation and two-run checksum commands are executable.
+
+## Milestone 3 - Persistence and scanning
+
+Implemented validated bulk import, persistent customer/cart/event histories, cart projections,
+time-based scanning, traceable suppression/enrollment and idempotent campaign episodes. Quantity
+updates reopen carts and reset activity across devices. API writes and source receipts commit together.
+
+## Milestone 4 - Coordinated recovery
+
+Implemented customer-serialized worker transactions, rechecked consent/purchase/caps/quiet hours,
+withdrawal and purchase cancellation, pause/cancel controls, callbacks and a real retry path inside
+the simulated provider. Concurrent-worker tests verify contact limits. The implemented atomic simulator
+simplifies the initial proposed lease/reservation design; real network-provider coordination remains
+an explicitly separate extension.
+
+## Milestone 5 - Orders, attribution and metrics
+
+Implemented paid order snapshots, 24-hour settlement, seven-day deterministic last click, unique
+credit, partial refunds and reconciled channel/variant metrics. Detector/evaluator evidence records
+all required anomaly classes and benign controls. Known-time consent is covered by policy tests;
+arbitrary backdated external callback integration is outside the current simulator.
+
+## Milestone 6 - Operations console
+
+Implemented responsive overview, queue/filter/pagination, cart trace and actions, campaigns,
+exception review, data-quality downloads and a scenario studio. Signed demo sessions enforce manager
+writes and read-only analyst/operator access. Browser verification covers normal and suppressed recovery,
+and narrow-screen navigation/account access. Review feedback fixed stale asynchronous route commits and
+keyboard/navigation orientation.
+
+## Milestone 7 - Verification and shareable release
+
+Locked dependencies, Docker/Compose startup, fresh-database HTTP smoke, full-data validation,
+CSV/JSON/SQL round-trip, reproducibility receipts and a verified archive support a friend running the
+project. README documents startup, password, demo journey, regeneration and limitations.
+The owner's public GitHub destination, complete AI-session transcript and personal review remain
+candidate-submission responsibilities. No submission timestamps or human work have been invented.
+
+
+## Verification and handoff
+
+Run foundation tests against PostgreSQL, then exercise a fresh-database starter workflow through
+the actual console: generate/import, abandon, inspect consent, dispatch/deliver/click, purchase,
+inspect single attribution and reconciled metrics. Repeat with opt-out before dispatch and
+with two concurrent workers spending one customer's cap. Run all four anomaly claims and
+benign controls through detection/evaluation. Re-import CSV/JSON/SQL and compare facts.
+
+Final reports include PK/FK/temporal/lifecycle/arithmetic validation, per-class precision/recall,
+expected decision agreement, realized distributions, exact volumes and two full checksum runs.
+Orders reconcile as credited + late + organic; winning-channel/variant revenue reconciles to
+the overall total. Show cohort cutoffs, censored counts and null denominators. Keep prompt
+history and genuine timestamps, and distinguish AI-authored work from personal review.
+
+All meaningful architecture choices have recommended defaults above. The organizer's deadline
+and the user's public-repository destination are submission inputs, not blockers for local
+implementation. Actual verification receipts and the completed dataset are included in the shareable release.

@@ -1,0 +1,343 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-08T19:26:18.166331+00:00",
+  "title": "Design System: Cart Recovery",
+  "extensions": {
+    "colorMeta": {
+      "paper": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "tonalRamp": [
+          "oklch(15% 0.0000 89.88)",
+          "oklch(26% 0.0000 89.88)",
+          "oklch(38% 0.0000 89.88)",
+          "oklch(49% 0.0000 89.88)",
+          "oklch(61% 0.0000 89.88)",
+          "oklch(72% 0.0000 89.88)",
+          "oklch(84% 0.0000 89.88)",
+          "oklch(95% 0.0000 89.88)"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Warm Surface",
+        "tonalRamp": [
+          "oklch(15% 0.0054 117.92)",
+          "oklch(26% 0.0054 117.92)",
+          "oklch(38% 0.0054 117.92)",
+          "oklch(49% 0.0054 117.92)",
+          "oklch(61% 0.0054 117.92)",
+          "oklch(72% 0.0054 117.92)",
+          "oklch(84% 0.0054 117.92)",
+          "oklch(95% 0.0054 117.92)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Pine Ink",
+        "tonalRamp": [
+          "oklch(15% 0.0283 168.91)",
+          "oklch(26% 0.0283 168.91)",
+          "oklch(38% 0.0283 168.91)",
+          "oklch(49% 0.0283 168.91)",
+          "oklch(61% 0.0283 168.91)",
+          "oklch(72% 0.0283 168.91)",
+          "oklch(84% 0.0283 168.91)",
+          "oklch(95% 0.0283 168.91)"
+        ]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Sage Gray",
+        "tonalRamp": [
+          "oklch(15% 0.0233 163.82)",
+          "oklch(26% 0.0233 163.82)",
+          "oklch(38% 0.0233 163.82)",
+          "oklch(49% 0.0233 163.82)",
+          "oklch(61% 0.0233 163.82)",
+          "oklch(72% 0.0233 163.82)",
+          "oklch(84% 0.0233 163.82)",
+          "oklch(95% 0.0233 163.82)"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Divider",
+        "tonalRamp": [
+          "oklch(15% 0.0128 149.23)",
+          "oklch(26% 0.0128 149.23)",
+          "oklch(38% 0.0128 149.23)",
+          "oklch(49% 0.0128 149.23)",
+          "oklch(61% 0.0128 149.23)",
+          "oklch(72% 0.0128 149.23)",
+          "oklch(84% 0.0128 149.23)",
+          "oklch(95% 0.0128 149.23)"
+        ]
+      },
+      "accent": {
+        "role": "primary",
+        "displayName": "Pine",
+        "tonalRamp": [
+          "oklch(15% 0.0888 161.28)",
+          "oklch(26% 0.0888 161.28)",
+          "oklch(38% 0.0888 161.28)",
+          "oklch(49% 0.0888 161.28)",
+          "oklch(61% 0.0888 161.28)",
+          "oklch(72% 0.0888 161.28)",
+          "oklch(84% 0.0888 161.28)",
+          "oklch(95% 0.0888 161.28)"
+        ]
+      },
+      "hover": {
+        "role": "primary",
+        "displayName": "Deep Pine",
+        "tonalRamp": [
+          "oklch(15% 0.0726 161.52)",
+          "oklch(26% 0.0726 161.52)",
+          "oklch(38% 0.0726 161.52)",
+          "oklch(49% 0.0726 161.52)",
+          "oklch(61% 0.0726 161.52)",
+          "oklch(72% 0.0726 161.52)",
+          "oklch(84% 0.0726 161.52)",
+          "oklch(95% 0.0726 161.52)"
+        ]
+      },
+      "soft": {
+        "role": "primary",
+        "displayName": "Pale Pine",
+        "tonalRamp": [
+          "oklch(15% 0.0141 155.58)",
+          "oklch(26% 0.0141 155.58)",
+          "oklch(38% 0.0141 155.58)",
+          "oklch(49% 0.0141 155.58)",
+          "oklch(61% 0.0141 155.58)",
+          "oklch(72% 0.0141 155.58)",
+          "oklch(84% 0.0141 155.58)",
+          "oklch(95% 0.0141 155.58)"
+        ]
+      },
+      "warn": {
+        "role": "secondary",
+        "displayName": "Amber",
+        "tonalRamp": [
+          "oklch(15% 0.0979 62.25)",
+          "oklch(26% 0.0979 62.25)",
+          "oklch(38% 0.0979 62.25)",
+          "oklch(49% 0.0979 62.25)",
+          "oklch(61% 0.0979 62.25)",
+          "oklch(72% 0.0979 62.25)",
+          "oklch(84% 0.0979 62.25)",
+          "oklch(95% 0.0979 62.25)"
+        ]
+      },
+      "danger": {
+        "role": "secondary",
+        "displayName": "Brick",
+        "tonalRamp": [
+          "oklch(15% 0.1566 25.45)",
+          "oklch(26% 0.1566 25.45)",
+          "oklch(38% 0.1566 25.45)",
+          "oklch(49% 0.1566 25.45)",
+          "oklch(61% 0.1566 25.45)",
+          "oklch(72% 0.1566 25.45)",
+          "oklch(84% 0.1566 25.45)",
+          "oklch(95% 0.1566 25.45)"
+        ]
+      },
+      "warning-surface": {
+        "role": "secondary",
+        "displayName": "Pale Amber",
+        "tonalRamp": [
+          "oklch(15% 0.0282 79.48)",
+          "oklch(26% 0.0282 79.48)",
+          "oklch(38% 0.0282 79.48)",
+          "oklch(49% 0.0282 79.48)",
+          "oklch(61% 0.0282 79.48)",
+          "oklch(72% 0.0282 79.48)",
+          "oklch(84% 0.0282 79.48)",
+          "oklch(95% 0.0282 79.48)"
+        ]
+      },
+      "danger-surface": {
+        "role": "secondary",
+        "displayName": "Pale Brick",
+        "tonalRamp": [
+          "oklch(15% 0.0199 25.17)",
+          "oklch(26% 0.0199 25.17)",
+          "oklch(38% 0.0199 25.17)",
+          "oklch(49% 0.0199 25.17)",
+          "oklch(61% 0.0199 25.17)",
+          "oklch(72% 0.0199 25.17)",
+          "oklch(84% 0.0199 25.17)",
+          "oklch(95% 0.0199 25.17)"
+        ]
+      },
+      "field-border": {
+        "role": "neutral",
+        "displayName": "Field Stroke",
+        "tonalRamp": [
+          "oklch(15% 0.0244 157.42)",
+          "oklch(26% 0.0244 157.42)",
+          "oklch(38% 0.0244 157.42)",
+          "oklch(49% 0.0244 157.42)",
+          "oklch(61% 0.0244 157.42)",
+          "oklch(72% 0.0244 157.42)",
+          "oklch(84% 0.0244 157.42)",
+          "oklch(95% 0.0244 157.42)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "headline": {
+        "displayName": "Page Headline",
+        "purpose": "Operational page title; 24px below 560px."
+      },
+      "metric": {
+        "displayName": "Metric",
+        "purpose": "Tabular overview values; 25px below 1100px."
+      }
+    },
+    "shadows": [
+      {
+        "name": "floating-toast",
+        "value": "0 8px 30px #182b2426",
+        "purpose": "Transient lower-right toast only."
+      }
+    ],
+    "motion": [
+      {
+        "name": "button-fill",
+        "value": "background .15s",
+        "purpose": "Button hover-fill transition."
+      },
+      {
+        "name": "loading-pulse",
+        "value": "pending 1.3s ease-out infinite",
+        "purpose": "Loading bar; opacity reaches .45 at 50%."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "animation:none!important;transition:none!important",
+        "purpose": "Applied to all elements under prefers-reduced-motion: reduce."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "compact-desktop",
+        "value": "1100px"
+      },
+      {
+        "name": "horizontal-navigation",
+        "value": "900px"
+      },
+      {
+        "name": "narrow",
+        "value": "560px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Compact operational action with a visible keyboard focus state.",
+      "html": "<button class=\"ds-primary\">Run recovery</button>",
+      "css": ".ds-primary{font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;font-size:14px;font-weight:600;min-height:40px;padding:8px 14px;border:1px solid var(--line,#d7dfd8);border-radius:8px;cursor:pointer;transition:background .15s;background:var(--accent,#176344);color:var(--paper,#fff);border-color:var(--accent,#176344);}.ds-primary:hover{background:var(--hover,#104b33)}.ds-primary:focus-visible{outline:3px solid var(--accent,#176344);outline-offset:3px}.ds-primary:disabled{opacity:.5;cursor:wait}@media(prefers-reduced-motion:reduce){.ds-primary{transition:none}}"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Compact operational action with a visible keyboard focus state.",
+      "html": "<button class=\"ds-secondary\">View evidence</button>",
+      "css": ".ds-secondary{font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;font-size:14px;font-weight:600;min-height:40px;padding:8px 14px;border:1px solid var(--line,#d7dfd8);border-radius:8px;cursor:pointer;transition:background .15s;background:var(--paper,#fff);color:var(--ink,#182b24);}.ds-secondary:hover{background:var(--soft,#e8f2eb)}.ds-secondary:focus-visible{outline:3px solid var(--accent,#176344);outline-offset:3px}.ds-secondary:disabled{opacity:.5;cursor:wait}@media(prefers-reduced-motion:reduce){.ds-secondary{transition:none}}"
+    },
+    {
+      "name": "Quiet Button",
+      "kind": "button",
+      "refersTo": "button-quiet",
+      "description": "Compact operational action with a visible keyboard focus state.",
+      "html": "<button class=\"ds-quiet\">Sign out</button>",
+      "css": ".ds-quiet{font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;font-size:14px;font-weight:600;min-height:40px;padding:8px 14px;border:1px solid var(--line,#d7dfd8);border-radius:8px;cursor:pointer;transition:background .15s;background:transparent;color:var(--ink,#182b24);}.ds-quiet:hover{background:var(--soft,#e8f2eb)}.ds-quiet:focus-visible{outline:3px solid var(--accent,#176344);outline-offset:3px}.ds-quiet:disabled{opacity:.5;cursor:wait}@media(prefers-reduced-motion:reduce){.ds-quiet{transition:none}}"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "field",
+      "description": "A compact, labeled operational field.",
+      "html": "<label class=\"ds-field-label\" for=\"ds-cart-search\">Search carts</label><input class=\"ds-field\" id=\"ds-cart-search\" placeholder=\"Cart or customer ID\">",
+      "css": ".ds-field-label{font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;display:block;font-size:14px;font-weight:600;color:var(--ink,#182b24);margin:16px 0 7px}.ds-field{font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;font-size:14px;color:var(--ink,#182b24);border:1px solid #a6b7ac;border-radius:6px;background:var(--paper,#fff);min-height:42px;padding:9px 11px;max-width:100%;caret-color:var(--accent,#176344)}.ds-field::placeholder{color:#64746b}.ds-field:focus-visible{outline:3px solid var(--accent,#176344);outline-offset:3px}"
+    },
+    {
+      "name": "Status Chip",
+      "kind": "chip",
+      "refersTo": "status",
+      "description": "Labeled normal, warning, and adverse status states.",
+      "html": "<span class=\"ds-status\">Recovered</span> <span class=\"ds-status ds-warn\">Pending</span> <span class=\"ds-status ds-bad\">Suppressed</span>",
+      "css": ".ds-status{font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;display:inline-flex;padding:4px 8px;border-radius:4px;font-size:11px;font-weight:650;background:var(--soft,#e8f2eb);color:var(--accent,#176344);white-space:nowrap}.ds-warn{background:#fbefdc;color:var(--warn,#87521b)}.ds-bad{background:#fbe9e7;color:var(--danger,#a22a2a)}"
+    },
+    {
+      "name": "Navigation",
+      "kind": "nav",
+      "refersTo": "navigation-active",
+      "description": "Muted navigation with a pale pine active state.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Example navigation\"><a href=\"#overview\">Overview</a><a class=\"ds-active\" href=\"#carts\" aria-current=\"page\">Cart queue</a></nav>",
+      "css": ".ds-nav{font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;display:flex;flex-direction:column;gap:5px;background:var(--paper,#fff)}.ds-nav a{font-size:14px;font-weight:600;color:var(--muted,#54645c);text-decoration:none;padding:12px 14px;border-radius:7px}.ds-nav a:hover{background:var(--surface,#f5f6f2)}.ds-nav a.ds-active{background:var(--soft,#e8f2eb);color:var(--accent,#176344)}.ds-nav a:focus-visible{outline:3px solid var(--accent,#176344);outline-offset:3px}@media(max-width:900px){.ds-nav{flex-direction:row;overflow:auto;white-space:nowrap}.ds-nav a{padding:10px}}"
+    },
+    {
+      "name": "Task Panel",
+      "kind": "card",
+      "refersTo": "panel",
+      "description": "Flat bordered task grouping with a compact section title.",
+      "html": "<section class=\"ds-panel\"><h2>Recovery decisions</h2><p>Review contact preferences and supporting evidence.</p></section>",
+      "css": ".ds-panel{font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;font-size:14px;color:var(--ink,#182b24);background:var(--paper,#fff);border:1px solid var(--line,#d7dfd8);border-radius:12px;padding:24px}.ds-panel h2{font-size:18px;margin:0 0 16px;letter-spacing:-.015em}.ds-panel p{line-height:1.6}@media(max-width:560px){.ds-panel{padding:18px}}"
+    },
+    {
+      "name": "Data Table",
+      "kind": "custom",
+      "description": "Compact comparable rows inside a local scroll region.",
+      "html": "<div class=\"ds-table-wrap\" role=\"region\" aria-label=\"Example conversion records\" tabindex=\"0\"><table class=\"ds-table\"><thead><tr><th>Cart</th><th>Outcome</th><th class=\"ds-number\">Revenue</th></tr></thead><tbody><tr><td>CART-1042</td><td>Recovered</td><td class=\"ds-number\">\u20b92,400</td></tr><tr><td>CART-1043</td><td>Pending</td><td class=\"ds-number\">\u20b90</td></tr></tbody></table></div>",
+      "css": ".ds-table-wrap{font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,\"Segoe UI\",sans-serif;overflow:auto;border:1px solid var(--line,#d7dfd8);border-radius:10px;background:var(--paper,#fff);color:var(--ink,#182b24)}.ds-table{border-collapse:collapse;width:100%;white-space:nowrap;text-align:left}.ds-table th{font-weight:600;color:var(--muted,#54645c);font-size:11px;background:#fafbf8;letter-spacing:.025em}.ds-table td,.ds-table th{padding:14px 16px;border-bottom:1px solid var(--line,#d7dfd8)}.ds-table td{font-size:12px;font-variant-numeric:tabular-nums}.ds-table tr:last-child td{border-bottom:0}.ds-table tbody tr:hover{background:#fbfcf9}.ds-table .ds-number{text-align:right}.ds-table-wrap:focus-visible{outline:3px solid var(--accent,#176344);outline-offset:3px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Recovery Workbench",
+    "overview": "A restrained off-white and pine operations surface makes decisions and their evidence easy to read. Familiar system typography, compact rows, and steady alignment support repeated inspection rather than visual spectacle.\n\nWhite containers separate tasks from the warm work surface. Text labels accompany semantic color, and visible focus states keep contextual actions accessible. This system is extracted from the delivered CSS; the earlier provisional notes are reconciled here with its actual values.",
+    "keyCharacteristics": [
+      "Warm work surface with white task containers and pine actions.",
+      "Compact operational typography with tabular numbers.",
+      "Flat bordered surfaces and shallow rounded controls.",
+      "Responsive navigation and locally scrolling data tables."
+    ],
+    "rules": [
+      {
+        "name": "The Labeled State Rule",
+        "body": "Status meaning is carried by visible text alongside semantic color.",
+        "section": "colors"
+      },
+      {
+        "name": "The Numeric Alignment Rule",
+        "body": "Use tabular numerals for operational values and right-align comparable numeric columns.",
+        "section": "typography"
+      },
+      {
+        "name": "The Work-Surface Rule",
+        "body": "Keep data containers flat and use the floating-toast shadow only for transient feedback.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do use text with semantic status colors.",
+      "Do preserve tabular numeric alignment in operational data.",
+      "Do keep tables inside their own scrolling regions on narrow screens.",
+      "Do retain the shared visible focus outline and reduced-motion behavior.",
+      "Do use the existing system font stack without external font requests."
+    ],
+    "donts": [
+      "Don't add shadows to task panels or data tables.",
+      "Don't substitute decorative cards for compact rows of comparable data.",
+      "Don't use color alone to distinguish errors, warnings, or selection."
+    ]
+  }
+}

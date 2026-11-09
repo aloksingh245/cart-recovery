@@ -1,0 +1,26 @@
+{
+  "seed": 20261022,
+  "start_at": "2026-10-01T00:00:00Z",
+  "observation_cutoff": "2026-11-01T00:00:00Z",
+  "currency": "INR",
+  "profiles": {
+    "starter": {"customers": 350, "carts": 1000, "abandoned_carts": 400, "campaigns": 200, "send_attempts": 200},
+    "full": {"customers": 17500, "carts": 50000, "abandoned_carts": 20000, "campaigns": 10000, "send_attempts": 10000}
+  },
+  "distribution_targets": {
+    "cart_lines": {"min": 1, "max": 8},
+    "unit_price_minor": {"min": 9900, "max": 1999900, "shape": "clipped_lognormal"},
+    "multi_device_customer_fraction": 0.18,
+    "withdrawal_customer_fraction": 0.06,
+    "late_purchase_abandoned_fraction": 0.08,
+    "frequency_conflict_candidate_fraction": 0.1,
+    "click_purchase_delay_hours": {"min": 1, "max": 240},
+    "initial_channel_mix": {"email": 0.8, "sms": 0.2}
+  },
+  "anomalies": {
+    "send_after_opt_out": 5,
+    "abandoned_after_purchase": 5,
+    "double_attribution": 5,
+    "stale_cart_total": 5
+  }
+}

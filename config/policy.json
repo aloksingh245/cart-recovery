@@ -1,0 +1,11 @@
+{
+  "version": "recovery-v1",
+  "abandonment_minutes": 60,
+  "cart_expiry_days": 14,
+  "attribution_days": 7,
+  "email_cap_24h": 1,
+  "sms_cap_72h": 1,
+  "all_channel_cap_7d": 3,
+  "quiet_start_hour": 21,
+  "quiet_end_hour": 9
+}

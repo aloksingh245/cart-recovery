@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+.env
+data/
+artifacts/*
+!artifacts/.gitkeep
+**/.plan-url
+**/.plan-state.json
+**/.plan-local-*
